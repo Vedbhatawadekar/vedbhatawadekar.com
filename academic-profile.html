@@ -4,32 +4,168 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Academic Profile – Ved Bhatawadekar</title>
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1a73e8;
+      --text-color: #333;
+      --bg-color: #ffffff;
+      --font-family: 'Inter', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--bg-color);
+      border-bottom: 1px solid #eee;
+      padding: 0.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      margin-top: 2rem;
+      margin-bottom: 0.8rem;
+      color: var(--primary-color);
+    }
+
+    p {
+      font-size: 1.05rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #aaa;
+      border-top: 1px solid #eee;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        margin-left: 0;
+        margin-right: 1rem;
+        margin-top: 0.3rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header><h1>Academic Profile</h1></header>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="academic-profile.html">Academic Profile</a>
-    <a href="study-in-switzerland.html">Study in Switzerland</a>
-    <a href="blog.html">Blog</a>
-  </nav>
-  <main>
+  <header>
+    <div><strong>Ved Bhatawadekar</strong></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="academic-profile.html">Profile</a>
+      <a href="study-in-switzerland.html">Consult</a>
+      <a href="blog.html">Blog</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Academic Profile</h1>
+
+    <p>I’m figuring things out — slowly, curiously, and mostly by building stuff and breaking it until something clicks.</p>
+
     <h2>Education</h2>
-    <p><strong>Pune Institute of Computer Technology</strong> — B.E. in Computer Engineering (GPA: 9.53/10)</p>
-    <h2>Skills</h2>
     <ul>
-      <li>Languages: Golang, Python, C++, JavaScript, Solidity</li>
-      <li>Cloud: AWS, Docker | Tools: GitLab, JIRA, Sumo</li>
-      <li>Databases: MySQL, MongoDB</li>
-      <li>Concepts: Microservices, Distributed Systems, SaaS</li>
+      <li><strong>University of Zurich</strong> (2025–present)
+        <br>MSc in Informatics – Focused on systems, cognition, and the edges of what software can do</li>
+
+      <li><a href="https://pict.edu" target="_blank"><strong>Pune Institute of Computer Technology</strong></a> (2019–2023)
+        <br>B.E. in Computer Engineering (CGPA: 9.53)
+        <br>Arguably the best place in Pune to study CS — competitive, high bar, and it pushed me.</li>
+
+      <li><a href="https://mitwpu.edu.in" target="_blank"><strong>MIT Junior College</strong></a> (2017–2019)
+        <br>HSC (Score: 85.85%)
+        <br>Where I first switched to academic English, navigated new subjects, and landed into PICT.</li>
+
+      <li><a href="https://aksharnandanschool.org" target="_blank"><strong>Akshar Nandan School</strong></a> – SSC (Score: 95.20%)
+        <br>A unique Marathi-medium school where curiosity was part of the culture — it shaped how I learn.</li>
     </ul>
-    <h2>Experience</h2>
-    <p><strong>Druva (2023–Present):</strong> Golang microservices, Threat Hunt, storage API migration</p>
-    <p><strong>Cybernetics Software (Intern):</strong> Ethereum + Solidity based blockchain PoC</p>
-    <h2>Research Vision</h2>
-    <p>I aim to contribute to research in distributed computing, systems, and human-AI interaction during my master’s and beyond.</p>
-  </main>
-  <footer>&copy; 2025 Ved Bhatawadekar</footer>
+
+    <h2>What I’ve Worked On</h2>
+    <ul>
+      <li><strong>Druva</strong> (2023–2025)
+        <br>Software Engineer in the Phoenix Product Team. Migrated major APIs to support “Daintree” (a new storage backend), developed and shipped two microservices (including a Lambda) as part of the “Threat Hunt” feature, and owned the design, testing, and deployment. No QA. You break it, you fix it.</li>
+
+      <li><strong>HyperSegment Automation</strong> (Internship, Jan–Mar 2021)
+        <br>Built a trading system in Python using Zerodha’s APIs — first exposure to real-world code, bugs, and the joy of watching automation actually work.</li>
+    </ul>
+
+    <h2>Workshops & Achievements</h2>
+    <ul>
+      <li>Winter School at CMI (2022) – theory, logic, puzzles, and smart people who made it all look easy</li>
+      <li>Codeforces Expert (Max: 1608) – Global Rank 402 in Div 2 Round 728</li>
+      <li>CodeChef 5★ (Max: 2044) – Global Rank 63 in Starters 13</li>
+      <li>1st in PICT for ICPC Regionals 2020 – National Rank 179</li>
+      <li>1602 FIDE-rated chess player – learned early, still play</li>
+      <li>Taught DSA via PICT ACM – tried to make algorithms less scary</li>
+    </ul>
+  </div>
+
+  <footer>
+    © 2025 Ved Bhatawadekar
+  </footer>
 </body>
 </html>
