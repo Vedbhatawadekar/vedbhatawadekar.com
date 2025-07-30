@@ -4,21 +4,176 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Study in Switzerland – Ved Bhatawadekar</title>
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1a73e8;
+      --text-color: #333;
+      --bg-color: #ffffff;
+      --font-family: 'Inter', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--bg-color);
+      border-bottom: 1px solid #eee;
+      padding: 0.8rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+      margin-left: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      margin-bottom: 1.2rem;
+    }
+
+    h2 {
+      font-size: 1.3rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      color: var(--primary-color);
+    }
+
+    p {
+      font-size: 1.05rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+
+    .note {
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: 0.5rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #aaa;
+      border-top: 1px solid #eee;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        margin-left: 0;
+        margin-right: 1rem;
+        margin-top: 0.3rem;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header><h1>Study in Switzerland</h1></header>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="academic-profile.html">Academic Profile</a>
-    <a href="study-in-switzerland.html">Study in Switzerland</a>
-    <a href="blog.html">Blog</a>
-  </nav>
-  <main>
-    <p>I help students applying to Europe, especially Switzerland. You can book a consultation session using the button below.</p>
-    <a href="https://calendly.com/vedbhatawadekar/consultation" class="btn" target="_blank">Book a Session</a>
-    <p class="note">Stripe integration for paid bookings will be added soon.</p>
-  </main>
-  <footer>&copy; 2025 Ved Bhatawadekar</footer>
+  <header>
+    <div><strong>Ved Bhatawadekar</strong></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="academic-profile.html">Profile</a>
+      <a href="study-in-switzerland.html">Consult</a>
+      <a href="blog.html">Blog</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Study in Switzerland</h1>
+
+    <p>I know how confusing and overwhelming the application process can be — especially when you’re trying to figure it out on your own.</p>
+
+    <p>When I was applying, I didn’t want to be spoon-fed answers, but I definitely wished I had someone to talk to — someone who’d just done it and could tell me what actually matters.</p>
+
+    <p>If you're applying to Switzerland (or Europe in general) for your master’s, and you’re feeling unsure about which universities to target, how to approach your SOP, or how to handle the visa process — I’d be happy to chat and share what worked for me.</p>
+
+    <p>I won’t hand you a template or write things for you — I’ll simply walk through what you're thinking, point out blind spots, and help you move forward with more clarity.</p>
+
+    <h2>What I can help with</h2>
+    <ul>
+      <li>Shortlisting universities based on your goals and budget</li>
+      <li>Feedback on your SOP, CV, and overall strategy</li>
+      <li>Understanding how the visa process works (Swiss/Schengen)</li>
+      <li>Dealing with timelines, doubts, and decision-making</li>
+    </ul>
+
+    <h2>Is this paid?</h2>
+    <p>No — not right now. But I may add a small fee later to filter out spam bookings. For now, I just want to help people who are serious and thoughtful about their journey.</p>
+
+    <h2>Want to talk?</h2>
+    <p>Pick a time that works for you below. The session will be around 30–45 minutes, 1-on-1, and casual — no slides, no pressure.</p>
+
+    <a href="https://calendly.com/ved_bhatawadekar/1-on-1" target="_blank" class="btn">Book a Free Session</a>
+    <p class="note">A small fee may be added later to avoid spam sessions.</p>
+
+    <h2>FAQs</h2>
+    <p><strong>Can we meet in Zurich?</strong><br>If I’m free and around, yes — happy to meet in person.</p>
+
+    <p><strong>Can you guarantee admission?</strong><br>No. But I’ll help you figure out how to present your story honestly and thoughtfully.</p>
+
+    <p><strong>Do you write SOPs for people?</strong><br>No. I’ll help you shape it, but the words should come from you.</p>
+  </div>
+
+  <footer>
+    © 2025 Ved Bhatawadekar
+  </footer>
 </body>
 </html>
