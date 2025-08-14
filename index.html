@@ -37,11 +37,34 @@
     }
 
     nav a {
-      color: var(--primary-color);
+      color: var(--text-color);
       text-decoration: none;
       font-weight: 600;
       margin-left: 1.5rem;
       font-size: 0.95rem;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 100%;
+      height: 2px;
+      background-color: var(--primary-color);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+
+    nav a.active {
+      color: var(--primary-color);
+    }
+
+    nav a.active::after {
+      transform: scaleX(1);
     }
 
     .container {
@@ -51,9 +74,9 @@
     }
 
     .profile-photo {
-      width: 140px;
-      height: 140px;
-      border-radius: 10px;
+      width: 289px;
+      height: 289px;
+      border-radius: 12px;
       object-fit: cover;
       margin-bottom: 1.5rem;
       border: 2px solid #eee;
@@ -103,7 +126,7 @@
   <header>
     <div><strong>Ved Bhatawadekar</strong></div>
     <nav>
-      <a href="index.html">Home</a>
+      <a href="index.html" class="active">Home</a>
       <a href="academic-profile.html">Profile</a>
       <a href="study-in-switzerland.html">Consult</a>
       <a href="blog.html">Blog</a>
@@ -111,7 +134,7 @@
   </header>
 
   <div class="container" style="text-align: center;">
-    <img src="Ved_Photo.jpg" alt="Ved Bhatawadekar" class="profile-photo">
+    <img src="VedPhoto.jpg" alt="Ved Bhatawadekar" class="profile-photo">
     <h1>Hi, I'm Ved.</h1>
     <p>
       I’m a computer scientist and software engineer, passionate about distributed systems, algorithms,

@@ -37,12 +37,36 @@
     }
 
     nav a {
-      color: var(--primary-color);
+      color: var(--text-color);
       text-decoration: none;
       font-weight: 600;
       margin-left: 1.5rem;
       font-size: 0.95rem;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease;
     }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 100%;
+      height: 2px;
+      background-color: var(--primary-color);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+
+    nav a.active {
+      color: var(--primary-color);
+    }
+
+    nav a.active::after {
+      transform: scaleX(1);
+    }
+
 
     .container {
       max-width: 800px;
@@ -132,7 +156,7 @@
     <nav>
       <a href="index.html">Home</a>
       <a href="academic-profile.html">Profile</a>
-      <a href="study-in-switzerland.html">Consult</a>
+      <a href="study-in-switzerland.html" class="active">Consult</a>
       <a href="blog.html">Blog</a>
     </nav>
   </header>
@@ -166,7 +190,7 @@
     <p class="note">A small fee may be added later to avoid spam sessions.</p>
 
     <h2>FAQs</h2>
-<!--    <p><strong>Can we meet in Zurich?</strong><br>If I’m free and around, yes — happy to meet in person.</p>-->
+    <p><strong>Can we meet in Zurich?</strong><br>If I’m free and around, yes — happy to meet in person.</p>
 
     <p><strong>Can you guarantee admission?</strong><br>No. But I’ll help you figure out how to present your story honestly and thoughtfully.</p>
 

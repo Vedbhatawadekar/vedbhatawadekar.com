@@ -37,11 +37,34 @@
     }
 
     nav a {
-      color: var(--primary-color);
+      color: var(--text-color);
       text-decoration: none;
       font-weight: 600;
       margin-left: 1.5rem;
       font-size: 0.95rem;
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 100%;
+      height: 2px;
+      background-color: var(--primary-color);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+
+    nav a.active {
+      color: var(--primary-color);
+    }
+
+    nav a.active::after {
+      transform: scaleX(1);
     }
 
     .container {
@@ -117,7 +140,7 @@
     <div><strong>Ved Bhatawadekar</strong></div>
     <nav>
       <a href="index.html">Home</a>
-      <a href="academic-profile.html">Profile</a>
+      <a href="academic-profile.html" class="active">Profile</a>
       <a href="study-in-switzerland.html">Consult</a>
       <a href="blog.html">Blog</a>
     </nav>
@@ -131,36 +154,37 @@
     <h2>Education</h2>
     <ul>
       <li><strong>University of Zurich</strong> (2025–present)
-        <br>MSc in Informatics – Focused on systems, cognition, and the edges of what software can do</li>
+        <br>MSc in Informatics </li>
 
       <li><a href="https://pict.edu" target="_blank"><strong>Pune Institute of Computer Technology</strong></a> (2019–2023)
-        <br>B.E. in Computer Engineering (CGPA: 9.53)
+        <br>B.E. in Computer Engineering (CGPA: 9.53/10 | CGPA: 5.84/6)
         <br>Arguably the best place in Pune to study CS — competitive, high bar, and it pushed me.</li>
 
       <li><a href="https://mitwpu.edu.in" target="_blank"><strong>MIT Junior College</strong></a> (2017–2019)
         <br>HSC (Score: 85.85%)
-        <br>Where I first switched to academic English, navigated new subjects, and landed into PICT.</li>
+        <br>Navigated new subjects in English for the first time- Physics, Chemistry, Maths and Electronics, got 99.60 percentile in MHT-CET and landed in PICT.</li>
 
-      <li><a href="https://aksharnandanschool.org" target="_blank"><strong>Akshar Nandan School</strong></a> – SSC (Score: 91.00%)
-        <br>A unique Marathi-medium school where curiosity was part of the culture — it shaped how I learn.</li>
+      <li><a href="https://aksharnandanschool.org" target="_blank"><strong>Akshar Nandan School</strong></a> (2005–2017)
+        <br> SSC (Score: 91.00%)
+        <br>A unique Marathi-medium school where curiosity was part of the culture — it shaped how I learn. </li>
     </ul>
 
-    <h2>What I’ve Worked On</h2>
+    <h2>Worked Experience</h2>
     <ul>
-      <li><strong>Druva</strong> (2023–2025)
-        <br>Software Engineer in the Phoenix Product Team. Migrated major APIs to support “Daintree” (a new storage backend), developed and shipped two microservices (including a Lambda) as part of the “Threat Hunt” feature, and owned the design, testing, and deployment. No QA. You break it, you fix it.</li>
+      <li><strong>Druva - Software Engineer </strong> (2023-2025)
+        <br>Developed two microservices in Golang and shipped them ( AWS Lambda,EC2 ) as part of the Threat Hunt feature, and owned the design, testing, and deployment. No QA. You break it, you fix it.</li>
 
-      <li><strong>HyperSegment Automation</strong> (Internship, Jan–Mar 2021)
+      <li><strong>HyperSegment Automation - Python developer Intern </strong> (Jan–Mar 2021)
         <br>Built a trading system in Python using Zerodha’s APIs — first exposure to real-world code, bugs, and the joy of watching automation actually work.</li>
     </ul>
 
     <h2>Workshops & Achievements</h2>
     <ul>
-      <li>Winter School at CMI (2022) – theory, logic, puzzles, and smart people who made it all look easy</li>
+      <li>Winter School at Chennai Mathematical Institute (2022) – "Algorithms and Lower Bounds": smart people who made it all look easy</li>
       <li>Codeforces Expert (Max: 1608) – Global Rank 402 in Div 2 Round 728</li>
       <li>CodeChef 5★ (Max: 2044) – Global Rank 63 in Starters 13</li>
       <li>1st in PICT for ICPC Regionals 2020 – National Rank 179</li>
-      <li>1602 FIDE-rated chess player – learned early, still play</li>
+      <li>1602 FIDE-rated chess player – learnt chess when I was 8, still I'm always up for a challenge</li>
       <li>Taught DSA via PICT ACM – tried to make algorithms less scary</li>
     </ul>
   </div>
