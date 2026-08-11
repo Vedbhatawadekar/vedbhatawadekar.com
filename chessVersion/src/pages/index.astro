@@ -63,7 +63,8 @@ import { chapters } from '../data/chapters';
     event.preventDefault();
     keyboardTargetIndex = nextIndex;
     activateChapter(nextIndex);
-    chapterElements[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const block = window.matchMedia('(max-width: 780px)').matches ? 'end' : 'center';
+    chapterElements[nextIndex].scrollIntoView({ behavior: 'smooth', block });
     window.setTimeout(() => { keyboardTargetIndex = null; }, 900);
   });
 </script>

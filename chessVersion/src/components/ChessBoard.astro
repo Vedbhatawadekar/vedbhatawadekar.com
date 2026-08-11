@@ -86,6 +86,11 @@ const squares = Array.from({ length: 64 }, (_, index) => {
   .notation small { color:var(--muted); font:inherit; }
   .progress { display:flex; justify-content:space-between; gap:1rem; margin:.35rem 0 0; color:var(--muted); font:.72rem 'DM Mono',monospace; }
   .progress span { color:var(--green); }
-  @media (max-width:780px) { .board-shell { position:relative; top:auto; margin-bottom:2rem; } .board { width:min(19rem,90vw); } }
+  @media (max-width:780px) {
+    .board-shell { position:sticky; top:.75rem; z-index:2; width:fit-content; margin:0 0 1.5rem; padding:.55rem; background:var(--paper); border:1px solid var(--line); }
+    .board { width:min(14rem,72vw); box-shadow:.55rem .55rem 0 var(--green-light); }
+    .notation { margin-top:.65rem; font-size:.74rem; }
+    .progress { font-size:.64rem; }
+  }
   @media (prefers-reduced-motion:reduce) { .square,.piece { transition:none; } }
 </style>
