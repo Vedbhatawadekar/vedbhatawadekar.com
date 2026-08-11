@@ -1,0 +1,28 @@
+---
+import type { Chapter } from '../data/chapters';
+const { chapter } = Astro.props as { chapter: Chapter };
+---
+<article class:list={['chapter', chapter.side]} data-ply={chapter.ply} id={`move-${chapter.ply}`}>
+  <div class="move"><span>{chapter.move}</span><i aria-hidden="true"></i></div>
+  <div class="chapter-copy">
+    <p class="period">{chapter.period}</p>
+    <h2>{chapter.title}</h2>
+    <p class="summary">{chapter.summary}</p>
+    <ul class="tags" aria-label="Key topics">{chapter.tags.map((tag) => <li>{tag}</li>)}</ul>
+  </div>
+</article>
+
+<style>
+  .chapter { display:grid; grid-template-columns:5.5rem 1fr; gap:1.25rem; padding:2.6rem 0; border-top:1px solid var(--line); scroll-margin-top:4rem; }
+  .chapter.is-active { margin-inline:-1rem; padding-inline:1rem; background:linear-gradient(90deg, var(--green-light), transparent 88%); border-top-color:var(--green); }
+  .move { padding-top:.3rem; color:var(--gold); font:500 .82rem 'DM Mono',monospace; }
+  .move i { display:block; width:1px; height:2.2rem; margin:.7rem 0 0 .25rem; background:var(--line); }
+  .black .move { color:var(--green); }
+  .chapter.is-active .move { color:var(--gold); }
+  .period { margin:0 0 .25rem; color:var(--muted); font:.74rem 'DM Mono',monospace; letter-spacing:.07em; text-transform:uppercase; }
+  h2 { margin:0; color:var(--green); font:500 clamp(1.65rem,3vw,2.3rem)/1.05 'Playfair Display',serif; }
+  .summary { max-width:37rem; margin:.75rem 0 0; font-size:1.08rem; }
+  .tags { display:flex; flex-wrap:wrap; gap:.45rem; list-style:none; padding:0; margin:1rem 0 0; }
+  .tags li { padding:.2rem .55rem; color:var(--green); border:1px solid var(--line); border-radius:100px; font:.72rem 'DM Mono',monospace; }
+  @media (max-width:540px) { .chapter { grid-template-columns:4rem 1fr; gap:.8rem; padding:2rem 0; } .chapter.is-active { margin-inline:-.5rem; padding-inline:.5rem; } }
+</style>

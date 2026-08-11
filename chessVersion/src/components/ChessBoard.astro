@@ -1,0 +1,91 @@
+---
+import { chapters } from '../data/chapters';
+const squares = Array.from({ length: 64 }, (_, index) => {
+  const file = 'abcdefgh'[index % 8];
+  const rank = 8 - Math.floor(index / 8);
+  return `${file}${rank}`;
+});
+---
+<div class="board-shell" aria-label="Interactive chessboard replaying the Légal Trap as the page scrolls">
+  <div class="board" id="career-board" role="img" aria-label="Chessboard">
+    {squares.map((square, index) => <span class:list={['square', (Math.floor(index / 8) + index) % 2 === 0 && 'dark']} data-square={square}></span>)}
+    <div class="pieces" id="career-pieces" aria-hidden="true"></div>
+  </div>
+  <p class="notation" id="move-notation"><span>1. e4</span><small>Opening</small></p>
+  <p class="progress" id="chapter-progress">Chapter 1 of 15 <span>← / → to navigate</span></p>
+</div>
+
+<script define:vars={{ chapters }}>
+  const board = document.querySelector('#career-board');
+  const pieces = document.querySelector('#career-pieces');
+  const notation = document.querySelector('#move-notation');
+  const progress = document.querySelector('#chapter-progress');
+  const squares = [...document.querySelectorAll('#career-board .square')];
+  const initialPosition = {
+    a8:'♜',b8:'♞',c8:'♝',d8:'♛',e8:'♚',f8:'♝',g8:'♞',h8:'♜',
+    a7:'♟',b7:'♟',c7:'♟',d7:'♟',e7:'♟',f7:'♟',g7:'♟',h7:'♟',
+    a2:'♙',b2:'♙',c2:'♙',d2:'♙',e2:'♙',f2:'♙',g2:'♙',h2:'♙',
+    a1:'♖',b1:'♘',c1:'♗',d1:'♕',e1:'♔',f1:'♗',g1:'♘',h1:'♖'
+  };
+  const moves = [
+    ['e2','e4'], ['e7','e5'], ['g1','f3'], ['b8','c6'], ['f1','c4'],
+    ['d7','d6'], ['b1','c3'], ['c8','g4'], ['h2','h3'], ['g4','h5'],
+    ['f3','e5'], ['h5','d1'], ['c4','f7'], ['e8','e7'], ['c3','d5']
+  ];
+  const pieceCodes = { '♙':'wP', '♖':'wR', '♘':'wN', '♗':'wB', '♕':'wQ', '♔':'wK', '♟':'bP', '♜':'bR', '♞':'bN', '♝':'bB', '♛':'bQ', '♚':'bK' };
+  const piecesAtStart = Object.entries(initialPosition).map(([square, chessPiece], index) => ({ id: index, square, chessPiece, captured: false }));
+  const pieceNodes = new Map();
+  piecesAtStart.forEach((pieceState) => {
+    const piece = document.createElement('span');
+    piece.className = 'piece';
+    const image = document.createElement('img');
+    image.src = `https://lichess1.org/assets/piece/cburnett/${pieceCodes[pieceState.chessPiece]}.svg`;
+    image.alt = '';
+    piece.append(image);
+    pieces.append(piece);
+    pieceNodes.set(pieceState.id, piece);
+  });
+  function positionAt(ply) {
+    const position = piecesAtStart.map((piece) => ({ ...piece }));
+    moves.slice(0, ply).forEach(([from, to]) => {
+      const movingPiece = position.find((piece) => !piece.captured && piece.square === from);
+      const capturedPiece = position.find((piece) => !piece.captured && piece.square === to);
+      if (capturedPiece) capturedPiece.captured = true;
+      if (movingPiece) movingPiece.square = to;
+    });
+    return position;
+  }
+  function updateBoard(ply) {
+    const chapter = chapters.find((entry) => entry.ply === ply) || chapters[0];
+    squares.forEach((square) => square.classList.toggle('active', square.dataset.square === chapter.square));
+    positionAt(ply).forEach((pieceState) => {
+      const piece = pieceNodes.get(pieceState.id);
+      const file = pieceState.square.charCodeAt(0) - 97;
+      const rank = Number(pieceState.square[1]);
+      piece.style.opacity = pieceState.captured ? '0' : '1';
+      piece.style.transform = `translate(${file * 100}%, ${(8 - rank) * 100}%)`;
+    });
+    notation.innerHTML = `<span>${chapter.move}</span><small>${chapter.title}</small>`;
+    progress.innerHTML = `Chapter ${chapters.indexOf(chapter) + 1} of ${chapters.length} <span>← / → to navigate</span>`;
+  }
+  updateBoard(1);
+  window.addEventListener('chapterchange', (event) => updateBoard(event.detail));
+</script>
+
+<style>
+  .board-shell { position:sticky; top:1.5rem; }
+  .board { display:grid; grid-template-columns:repeat(8,1fr); width:min(23rem,78vw); aspect-ratio:1; border:1px solid var(--ink); position:relative; box-shadow:1rem 1rem 0 var(--green-light); }
+  .square { background:var(--board-light); transition:background .25s ease; }
+  .square.dark { background:var(--board-dark); }
+  .square.active { background:var(--board-highlight); }
+  .pieces { position:absolute; inset:0; pointer-events:none; }
+  .pieces :global(.piece) { position:absolute; inset:0 auto auto 0; width:12.5%; height:12.5%; display:grid; place-items:center; transition:transform .35s ease, opacity .18s ease; will-change:transform; }
+  .pieces :global(.piece img) { width:100%; height:100%; display:block; }
+  .notation { display:flex; justify-content:space-between; gap:1rem; margin:1rem 0 0; font-family:'DM Mono',monospace; font-size:.82rem; }
+  .notation span { color:var(--gold); font-weight:500; }
+  .notation small { color:var(--muted); font:inherit; }
+  .progress { display:flex; justify-content:space-between; gap:1rem; margin:.35rem 0 0; color:var(--muted); font:.72rem 'DM Mono',monospace; }
+  .progress span { color:var(--green); }
+  @media (max-width:780px) { .board-shell { position:relative; top:auto; margin-bottom:2rem; } .board { width:min(19rem,90vw); } }
+  @media (prefers-reduced-motion:reduce) { .square,.piece { transition:none; } }
+</style>

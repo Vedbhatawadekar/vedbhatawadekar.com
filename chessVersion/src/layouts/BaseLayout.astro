@@ -1,0 +1,25 @@
+---
+const { title = 'Ved Bhatawadekar' } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Ved Bhatawadekar - software engineer, researcher, and chess player." />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:wght@500;600&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"06b2322bc39f49d38960d5bb1c2a47bb"}'></script>
+  </head>
+  <body><slot /></body>
+</html>
+
+<style is:global>
+  :root { --paper:#f3efe5; --ink:#1a1c1a; --muted:#62675f; --green:#244239; --green-light:#d7e0d6; --gold:#a8782e; --line:#cfc8b9; --board-light:#ebecd0; --board-dark:#779556; --board-highlight:#f6f669; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:'Source Sans 3',sans-serif; line-height:1.5; }
+  a { color:inherit; }
+</style>

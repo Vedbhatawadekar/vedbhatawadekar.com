@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ChessBoard from '../components/ChessBoard.astro';
+import Chapter from '../components/Chapter.astro';
+import { chapters } from '../data/chapters';
+---
+<BaseLayout title="Ved Bhatawadekar - Engineer, Researcher, Chess Player">
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Ved Bhatawadekar home"><span class="mark" aria-hidden="true">▦</span> Ved Bhatawadekar</a>
+    <nav><a href="#game-record">Profile</a><a href="#current-position">Contact</a></nav>
+  </header>
+  <main id="top">
+    <section class="hero">
+      <p class="eyebrow">MSc Informatics · University of Zurich</p>
+      <p class="role">Research Assistant · ETH Zurich</p>
+      <h1>Engineering for<br /><em>complex positions.</em></h1>
+      <div class="hero-details"><span>Zurich, Switzerland</span></div>
+      <a class="scroll-link" href="#game-record">Explore the game record <span>↓</span></a>
+    </section>
+    <section class="record" id="game-record" aria-labelledby="record-title">
+      <div class="record-intro"><div class="record-heading"><p class="eyebrow">Why chess?</p><h2 id="record-title">Chess taught me<br />how to think.</h2></div><p>I have played chess since I was eight. The board is not decoration: each move marks a chapter in my life, and reflects the habits I bring to engineering and research - preparation, calculation and creativity.</p></div>
+      <div class="record-layout">
+        <ChessBoard />
+        <div class="chapters">{chapters.map((chapter) => <Chapter chapter={chapter} />)}</div>
+      </div>
+    </section>
+    <section class="current" id="current-position">
+      <p class="eyebrow">Current position</p>
+      <h2>Let’s make the next move thoughtful.</h2>
+      <p>I am always happy to connect about research and interesting engineering problems.</p>
+      <div class="links"><a href="mailto:vedbhatawadekar@gmail.com">Email me ↗</a><a href="https://www.linkedin.com/in/vedbhatawadekar/" target="_blank" rel="noreferrer">LinkedIn ↗</a></div>
+    </section>
+  </main>
+  <footer>© 2026 Ved Bhatawadekar <span>UZH & ETH Zürich</span></footer>
+</BaseLayout>
+
+<script>
+  const chapterElements = [...document.querySelectorAll('[data-ply]')];
+  let activeChapterIndex = 0;
+  let keyboardTargetIndex = null;
+  function activateChapter(index) {
+    if (index < 0 || index >= chapterElements.length || index === activeChapterIndex && chapterElements[index].classList.contains('is-active')) return;
+    activeChapterIndex = index;
+    chapterElements.forEach((chapter, chapterIndex) => chapter.classList.toggle('is-active', chapterIndex === activeChapterIndex));
+    window.dispatchEvent(new CustomEvent('chapterchange', { detail: Number(chapterElements[index].getAttribute('data-ply')) }));
+  }
+  const observer = new IntersectionObserver((entries) => {
+    const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (visible) {
+      const visibleIndex = chapterElements.indexOf(visible.target);
+      if (keyboardTargetIndex !== null && visibleIndex !== keyboardTargetIndex) return;
+      keyboardTargetIndex = null;
+      activateChapter(visibleIndex);
+    }
+  }, { rootMargin: '-28% 0px -48% 0px', threshold: [0, .4, .7] });
+  chapterElements.forEach((chapter) => observer.observe(chapter));
+  activateChapter(0);
+  window.addEventListener('keydown', (event) => {
+    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+    const direction = event.key === 'ArrowRight' ? 1 : -1;
+    const nextIndex = Math.max(0, Math.min(chapterElements.length - 1, activeChapterIndex + direction));
+    if (nextIndex === activeChapterIndex) return;
+    event.preventDefault();
+    keyboardTargetIndex = nextIndex;
+    activateChapter(nextIndex);
+    chapterElements[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    window.setTimeout(() => { keyboardTargetIndex = null; }, 900);
+  });
+</script>
+
+<style>
+  .site-header, main, footer { width:min(1080px, calc(100% - 3rem)); margin:auto; }
+  .site-header { display:flex; justify-content:space-between; align-items:center; min-height:74px; border-bottom:1px solid var(--line); }
+  .brand { display:flex; align-items:center; gap:.6rem; text-decoration:none; color:var(--ink); font:500 1rem 'Playfair Display',serif; }
+  .mark { display:grid; place-items:center; width:1.8rem; height:1.8rem; color:var(--paper); background:var(--green); font-family:Arial,sans-serif; }
+  nav { display:flex; gap:1.3rem; } nav a { color:var(--muted); text-decoration:none; font:.75rem 'DM Mono',monospace; text-transform:uppercase; }
+  .hero { padding:clamp(5rem,14vw,9rem) 0 5rem; border-bottom:1px solid var(--line); }
+  .eyebrow { margin:0; color:var(--gold); font:500 .75rem 'DM Mono',monospace; letter-spacing:.08em; text-transform:uppercase; }
+  .hero h1, .record-intro h2, .current h2 { margin:.8rem 0 1.25rem; color:var(--green); font:500 clamp(3rem,8vw,6.5rem)/.96 'Playfair Display',serif; letter-spacing:-.045em; }
+  .hero h1 em { color:var(--gold); font-style:normal; }
+  .role { margin:.38rem 0 0; color:var(--green); font:500 .82rem 'DM Mono',monospace; letter-spacing:.04em; }
+  .hero-details { display:flex; flex-wrap:wrap; gap:.5rem 1.25rem; margin-top:2rem; color:var(--muted); font:.78rem 'DM Mono',monospace; }
+  .scroll-link { display:inline-flex; gap:.8rem; margin-top:3.2rem; color:var(--green); font:500 .82rem 'DM Mono',monospace; text-decoration:none; }
+  .scroll-link span { color:var(--gold); }
+  .record { padding:5rem 0; }
+  .record-intro { display:grid; grid-template-columns:1.4fr .8fr; gap:2rem; align-items:end; margin-bottom:3.5rem; }
+  .record-heading { display:flex; align-items:baseline; gap:1.1rem; flex-wrap:wrap; }
+  .record-heading .eyebrow { margin-bottom:.45rem; }
+  .record-intro h2 { font-size:clamp(2.4rem,5vw,4.3rem); }
+  .record-intro > p:last-child { max-width:31rem; margin:0 0 .5rem; color:var(--muted); }
+  .record-layout { display:grid; grid-template-columns:minmax(16rem,.7fr) minmax(0,1fr); gap:clamp(2.5rem,7vw,6rem); align-items:start; }
+  .chapters { min-width:0; }
+  .current { margin:1rem auto 5rem; padding:4.5rem 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .current h2 { max-width:46rem; font-size:clamp(2.5rem,5.5vw,4.7rem); }
+  .current > p:not(.eyebrow) { max-width:35rem; font-size:1.1rem; }
+  .links { display:flex; flex-wrap:wrap; gap:1.25rem; margin-top:2rem; } .links a { color:var(--green); font:500 .82rem 'DM Mono',monospace; }
+  footer { display:flex; justify-content:space-between; gap:1rem; padding:0 0 2.3rem; color:var(--muted); font:.72rem 'DM Mono',monospace; text-transform:uppercase; }
+  @media (max-width:780px) { .site-header, main, footer { width:min(100% - 2rem, 1080px); } .record-intro,.record-layout { grid-template-columns:1fr; } .record-intro { gap:.2rem; margin-bottom:2rem; } .record { padding:3.5rem 0; } .hero { padding:4rem 0 3.5rem; } }
+</style>
