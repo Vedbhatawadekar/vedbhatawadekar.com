@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactSection from '../components/ContactSection.astro';
+---
+<BaseLayout title="Blog - Ved Bhatawadekar">
+  <header class="page-header">
+    <a class="brand" href="/"><span class="mark" aria-hidden="true">▦</span> Ved Bhatawadekar</a>
+    <nav><a href="/">Profile</a><a href="/consult">Consult</a><a class="active" href="/blog">Blog</a><a href="#contact">Contact</a></nav>
+  </header>
+  <main class="page-shell">
+    <p class="eyebrow">Notes and writing</p>
+    <h1>Things worth thinking through.</h1>
+    <p class="lede">A space for notes on systems, algorithms, study abroad, chess, and the lessons that become clearer once they are written down.</p>
+    <section class="upcoming">
+      <p class="eyebrow">Coming soon</p>
+      <article><span>01</span><div><h2>A Practical Guide to Studying in Switzerland</h2><p>What I learned from choosing universities, preparing applications, and moving to Zurich.</p></div></article>
+      <article><span>02</span><div><h2>North London Forever: Arsenal Champions of England 2026</h2><p>A personal note on a season worth remembering.</p></div></article>
+    </section>
+  </main>
+  <ContactSection />
+  <footer>© 2026 Ved Bhatawadekar <span>Notes · Systems · Strategy</span></footer>
+</BaseLayout>
+
+<style>
+  .page-header, .page-shell, footer { width:min(1080px,calc(100% - 3rem)); margin:auto; }
+  .page-header { min-height:74px; display:flex; align-items:center; justify-content:space-between; gap:1rem; border-bottom:1px solid var(--line); }
+  .brand { display:flex; align-items:center; gap:.6rem; color:var(--ink); text-decoration:none; font:500 1rem 'Playfair Display',serif; } .mark { display:grid; place-items:center; width:1.8rem; height:1.8rem; color:var(--paper); background:var(--green); font-family:Arial,sans-serif; } nav { display:flex; gap:1.1rem; } nav a { color:var(--muted); text-decoration:none; font:.75rem 'DM Mono',monospace; text-transform:uppercase; } nav .active { color:var(--green); }
+  .page-shell { padding:clamp(4rem,10vw,7rem) 0 5rem; } .eyebrow { margin:0; color:var(--gold); font:500 .75rem 'DM Mono',monospace; letter-spacing:.08em; text-transform:uppercase; }
+  h1,h2 { color:var(--green); font-family:'Playfair Display',serif; font-weight:500; letter-spacing:-.04em; } h1 { max-width:48rem; margin:.8rem 0 1.5rem; font-size:clamp(3rem,7vw,5.6rem); line-height:.95; } h2 { margin:0; font-size:clamp(1.5rem,3vw,2.2rem); line-height:1.05; }
+  .lede { max-width:39rem; color:var(--muted); font-size:1.1rem; }.upcoming { width:100%; margin-top:4rem; border-top:1px solid var(--line); }.upcoming > .eyebrow { margin-top:2rem; }.upcoming article { display:grid; grid-template-columns:3.5rem minmax(0,1fr); gap:1rem; padding:2rem 0; border-bottom:1px solid var(--line); }.upcoming article > span { color:var(--gold); font:500 .8rem 'DM Mono',monospace; }.upcoming p { max-width:38rem; color:var(--muted); margin:.6rem 0 0; } footer { display:flex; justify-content:space-between; gap:1rem; padding:0 0 2.3rem; color:var(--muted); font:.72rem 'DM Mono',monospace; text-transform:uppercase; }
+  @media (max-width:700px) { .page-header,.page-shell,footer { width:min(100% - 2rem,1080px); } .page-header { padding:.8rem 0; align-items:flex-start; flex-direction:column; } nav { flex-wrap:wrap; gap:.7rem 1rem; } }
+</style>

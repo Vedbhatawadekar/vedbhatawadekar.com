@@ -2,12 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ChessBoard from '../components/ChessBoard.astro';
 import Chapter from '../components/Chapter.astro';
+import ContactSection from '../components/ContactSection.astro';
 import { chapters } from '../data/chapters';
 ---
 <BaseLayout title="Ved Bhatawadekar - Engineer, Researcher, Chess Player">
   <header class="site-header">
     <a class="brand" href="#top" aria-label="Ved Bhatawadekar home"><span class="mark" aria-hidden="true">▦</span> Ved Bhatawadekar</a>
-    <nav><a href="#game-record">Profile</a><a href="#current-position">Contact</a></nav>
+    <nav><a href="#game-record">Profile</a><a href="/consult">Consult</a><a href="/blog">Blog</a><a href="#contact">Contact</a></nav>
   </header>
   <main id="top">
     <section class="hero">
@@ -18,19 +19,14 @@ import { chapters } from '../data/chapters';
       <a class="scroll-link" href="#game-record">Explore the game record <span>↓</span></a>
     </section>
     <section class="record" id="game-record" aria-labelledby="record-title">
-      <div class="record-intro"><div class="record-heading"><p class="eyebrow">Why chess?</p><h2 id="record-title">Chess taught me<br />how to think.</h2></div><p>I have played chess since I was eight. The board is not decoration: each move marks a chapter in my life, and reflects the habits I bring to engineering and research - preparation, calculation and creativity.</p></div>
+      <div class="record-intro"><div class="record-heading"><p class="eyebrow">Why chess? I have played chess since I was eight </p><h2 id="record-title">Chess taught me<br />how to think.</h2></div><p>The board is a decoration: each move marks a chapter in my professional life. A creative way to tell my professional story.</p></div>
       <div class="record-layout">
         <ChessBoard />
         <div class="chapters">{chapters.map((chapter) => <Chapter chapter={chapter} />)}</div>
       </div>
     </section>
-    <section class="current" id="current-position">
-      <p class="eyebrow">Current position</p>
-      <h2>Let’s make the next move thoughtful.</h2>
-      <p>I am always happy to connect about research and interesting engineering problems.</p>
-      <div class="links"><a href="mailto:vedbhatawadekar@gmail.com">Email me ↗</a><a href="https://www.linkedin.com/in/vedbhatawadekar/" target="_blank" rel="noreferrer">LinkedIn ↗</a></div>
-    </section>
   </main>
+  <ContactSection />
   <footer>© 2026 Ved Bhatawadekar <span>UZH & ETH Zürich</span></footer>
 </BaseLayout>
 
@@ -38,21 +34,31 @@ import { chapters } from '../data/chapters';
   const chapterElements = [...document.querySelectorAll('[data-ply]')];
   let activeChapterIndex = 0;
   let keyboardTargetIndex = null;
+  let observerFrame = null;
   function activateChapter(index) {
     if (index < 0 || index >= chapterElements.length || index === activeChapterIndex && chapterElements[index].classList.contains('is-active')) return;
     activeChapterIndex = index;
     chapterElements.forEach((chapter, chapterIndex) => chapter.classList.toggle('is-active', chapterIndex === activeChapterIndex));
     window.dispatchEvent(new CustomEvent('chapterchange', { detail: Number(chapterElements[index].getAttribute('data-ply')) }));
   }
-  const observer = new IntersectionObserver((entries) => {
-    const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (visible) {
-      const visibleIndex = chapterElements.indexOf(visible.target);
-      if (keyboardTargetIndex !== null && visibleIndex !== keyboardTargetIndex) return;
-      keyboardTargetIndex = null;
-      activateChapter(visibleIndex);
-    }
-  }, { rootMargin: '-28% 0px -48% 0px', threshold: [0, .4, .7] });
+  function activateNearestChapter() {
+    if (keyboardTargetIndex !== null) return;
+    const anchor = window.matchMedia('(max-width: 780px)').matches ? window.innerHeight * .72 : window.innerHeight * .52;
+    const nearestIndex = chapterElements.reduce((closestIndex, chapter, index) => {
+      const currentDistance = Math.abs(chapter.getBoundingClientRect().top + chapter.getBoundingClientRect().height / 2 - anchor);
+      const closest = chapterElements[closestIndex].getBoundingClientRect();
+      const closestDistance = Math.abs(closest.top + closest.height / 2 - anchor);
+      return currentDistance < closestDistance ? index : closestIndex;
+    }, 0);
+    activateChapter(nearestIndex);
+  }
+  const observer = new IntersectionObserver(() => {
+    if (observerFrame !== null) cancelAnimationFrame(observerFrame);
+    observerFrame = requestAnimationFrame(() => {
+      observerFrame = null;
+      activateNearestChapter();
+    });
+  }, { rootMargin: '-15% 0px -15% 0px', threshold: [0, .1, .5, .9] });
   chapterElements.forEach((chapter) => observer.observe(chapter));
   activateChapter(0);
   window.addEventListener('keydown', (event) => {
@@ -65,7 +71,10 @@ import { chapters } from '../data/chapters';
     activateChapter(nextIndex);
     const block = window.matchMedia('(max-width: 780px)').matches ? 'end' : 'center';
     chapterElements[nextIndex].scrollIntoView({ behavior: 'smooth', block });
-    window.setTimeout(() => { keyboardTargetIndex = null; }, 900);
+    window.setTimeout(() => {
+      keyboardTargetIndex = null;
+      activateNearestChapter();
+    }, 900);
   });
 </script>
 
@@ -83,7 +92,7 @@ import { chapters } from '../data/chapters';
   .hero-details { display:flex; flex-wrap:wrap; gap:.5rem 1.25rem; margin-top:2rem; color:var(--muted); font:.78rem 'DM Mono',monospace; }
   .scroll-link { display:inline-flex; gap:.8rem; margin-top:3.2rem; color:var(--green); font:500 .82rem 'DM Mono',monospace; text-decoration:none; }
   .scroll-link span { color:var(--gold); }
-  .record { padding:5rem 0; }
+  .record { padding:5rem 0; border-bottom:1px solid var(--line); }
   .record-intro { display:grid; grid-template-columns:1.4fr .8fr; gap:2rem; align-items:end; margin-bottom:3.5rem; }
   .record-heading { display:flex; align-items:baseline; gap:1.1rem; flex-wrap:wrap; }
   .record-heading .eyebrow { margin-bottom:.45rem; }
@@ -91,10 +100,6 @@ import { chapters } from '../data/chapters';
   .record-intro > p:last-child { max-width:31rem; margin:0 0 .5rem; color:var(--muted); }
   .record-layout { display:grid; grid-template-columns:minmax(16rem,.7fr) minmax(0,1fr); gap:clamp(2.5rem,7vw,6rem); align-items:start; }
   .chapters { min-width:0; }
-  .current { margin:1rem auto 5rem; padding:4.5rem 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-  .current h2 { max-width:46rem; font-size:clamp(2.5rem,5.5vw,4.7rem); }
-  .current > p:not(.eyebrow) { max-width:35rem; font-size:1.1rem; }
-  .links { display:flex; flex-wrap:wrap; gap:1.25rem; margin-top:2rem; } .links a { color:var(--green); font:500 .82rem 'DM Mono',monospace; }
   footer { display:flex; justify-content:space-between; gap:1rem; padding:0 0 2.3rem; color:var(--muted); font:.72rem 'DM Mono',monospace; text-transform:uppercase; }
   @media (max-width:780px) { .site-header, main, footer { width:min(100% - 2rem, 1080px); } .record-intro,.record-layout { grid-template-columns:1fr; } .record-intro { gap:.2rem; margin-bottom:2rem; } .record { padding:3.5rem 0; } .hero { padding:4rem 0 3.5rem; } }
 </style>
